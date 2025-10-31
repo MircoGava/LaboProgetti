@@ -16,15 +16,17 @@
 
        
 
-        echo "<p>Le playlist presenti sono: </p>";
 
         while ($riga = $risultato->fetch_assoc()){
             $Titolo = $riga["Titolo"];
             $Bio = $riga["Bio"];
 
 
-            echo "Titolo: $Titolo <br>";
-            echo "Bio: $Bio <br>";
+            echo "<h2 onclick='home()'> Titolo: $Titolo, Bio: $Bio </h2>
+            <script> function home() {
+                window.location.href = 'RiproduttoreCanzoni.html';
+             } 
+            </script>";
         }
     }
 }

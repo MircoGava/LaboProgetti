@@ -11,7 +11,7 @@
 </head>
 <body>
     <div class="d1">
-        <h1 class="Titolo" onclick="versoRiproduttore()">YourMusic</h1>
+        <h1 class="Titolo">YourMusic</h1>
     </div>
     <div style="display: flex;">
         <div class="d2"  id="blocchi">
@@ -31,10 +31,6 @@
     </div>
 
     <script>
-        function versoRiproduttore()
-        {
-            window.location.href = 'RiproduttoreCanzoni.html';
-        }
         function versoAggiuntaPlaylist()
         {
             window.location.href = 'CreazionePlaylist.html';

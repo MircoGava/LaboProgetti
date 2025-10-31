@@ -11,149 +11,149 @@ const DisPlay = document.getElementById('Tplay');
 const DisPause = document.getElementById('Tpause');
 
 var x = 0;
-
-//const artist_name =  ['A$AP Rocky','Baby Gang','Bello Figo','Metro Boomin','Don Toliver'] ;
-//const song_title =  ['Get Lit','Casablanca','Non Pago Affitto','Trance','You'];
+var artist_name = [];
+var song_title = [];
+var lun_array = 0;
 
 fetch('Connessione.php')
-.then(res => res.json())
-.then(data => {
-  artist_name = data.map(s => s.Autore);
-  song_title = data.map(s => s.Titolo);
-})
+  .then(res => res.json())
+  .then(data => {
+    artist_name = data.map(song => song.Autore);
+    song_title = data.map(song => song.Titolo);
 
+    lun_array = song_title.length - 1;
 
-playSong.addEventListener('click', effect)
+    
 
-function effect(){
+    playSong.addEventListener('click', effect);
 
-    if((!playing.classList.contains('none'))){
-        canzone.play();
-        DisPause.style.display = 'block';
-        DisPlay.style.display = 'none';
-        setInterval(prog,1000);
-        setInterval(line,1000);
+    function effect(){
+        if((!playing.classList.contains('none'))){
+            canzone.play();
+            DisPause.style.display = 'block';
+            DisPlay.style.display = 'none';
+            setInterval(prog,1000);
+            setInterval(line,1000);
 
-        progress.addEventListener('click', (e) => {
-            const rect = e.target.getBoundingClientRect();
-            const clickX = e.clientX - rect.left;
-            const percent = clickX / e.target.clientWidth;
-            const newTime = percent * canzone.duration;
-            canzone.currentTime = newTime;
-        });
+            progress.addEventListener('click', (e) => {
+                const rect = e.target.getBoundingClientRect();
+                const clickX = e.clientX - rect.left;
+                const percent = clickX / e.target.clientWidth;
+                const newTime = percent * canzone.duration;
+                canzone.currentTime = newTime;
+            });
 
-        function line() {
-            var widthbar = (canzone.currentTime / canzone.duration) * 100;
-            lines.style.width = widthbar + '%';
+            function line() {
+                var widthbar = (canzone.currentTime / canzone.duration) * 100;
+                lines.style.width = widthbar + '%';
+            }
         }
+        else{
+            canzone.pause();
+            DisPause.style.display = 'none';
+            DisPlay.style.display = 'block';
+        }
+
+        titolo.classList.toggle('run');
+        playing.classList.toggle('none');
+        pauses.classList.toggle('none');
+        art_img.classList.toggle('round');
+        dur();
     }
-    else{
+
+    function removeEffect(){
         canzone.pause();
+        canzone.currentTime = 0.01;
+        titolo.classList.remove('run');
+        playing.classList.remove('none');
+        pauses.classList.add('none');
+        art_img.classList.remove('round');
         DisPause.style.display = 'none';
         DisPlay.style.display = 'block';
     }
 
-    titolo.classList.toggle('run');
-    playing.classList.toggle('none');
-    pauses.classList.toggle('none');
-    art_img.classList.toggle('round');
-    dur();
-}
-
-function removeEffect(){
-    canzone.pause();
-    canzone.currentTime = 0.01;
-    titolo.classList.remove('run');
-    playing.classList.remove('none');
-    pauses.classList.add('none');
-    art_img.classList.remove('round');
-    DisPause.style.display = 'none';
-    DisPlay.style.display = 'block';
-}
-
-
-
-const lun_array = song_title.length -1;
-
-function backward(){
-    const wasPlaying = !canzone.paused;
-    x -= 1;
-    if(x < 0){
-        x = lun_array;
+    function songs(x){
+        art_name.innerHTML = artist_name[x];
+        titolo.innerHTML = song_title[x];
+        art_img.src = 'foto/' +  artist_name[x] + '.png';
+        canzone.src = 'canzoni/' + song_title[x] + '.mp3';
+        canzone.addEventListener('loadedmetadata', dur);
     }
-    songs(x);
-    dur();
 
-    if (wasPlaying) {
-        canzone.play();
-    } else {
-        removeEffect(); 
+    songs(0);
+
+    const lines = document.querySelector('.lineChild');
+    const progress = document.querySelector('.line');
+    const strt = document.querySelector('#start');
+    const end = document.querySelector('#end');
+
+    function dur(){
+        var dura = canzone.duration;
+        var secdu = Math.floor(dura % 60);
+        var mindu = Math.floor(dura / 60);
+        if(secdu < 10){
+            secdu = '0' + secdu;
+        }
+        end.innerHTML = mindu + ':' + secdu;
     }
-}
 
-function forward(){
-    const wasPlaying = !canzone.paused;
-    x += 1;
-    if(x > lun_array){
-        x = 0;
+    function prog(){
+        var curTime = canzone.currentTime;
+        var minCur = Math.floor(curTime / 60);
+        var secCur = Math.floor(curTime % 60);
+
+        if(secCur < 10){
+            secCur = '0' + secCur;
+        }
+        strt.innerHTML = minCur + ':' + secCur;
+
+        if(canzone.currentTime >= canzone.duration) {
+            forward();
+        }
     }
-    songs(x);
-    dur();
 
-    if (wasPlaying) {
-        canzone.play();
-    } else {
-        removeEffect(); 
+    
+    function backward(){
+        const wasPlaying = !canzone.paused;
+        x -= 1;
+        if(x < 0){
+            x = lun_array;
+        }
+        songs(x);
+        dur();
+
+        if (wasPlaying) {
+            canzone.play();
+        } else {
+            removeEffect(); 
+        }
     }
-}
 
-function songs(x){
-    art_name.innerHTML = artist_name[x];
-    titolo.innerHTML = song_title[x];
-    art_img.src = 'foto/' +  artist_name[x] + '.png';
-    canzone.src = 'canzoni/' + song_title[x] + '.mp3';
-    canzone.addEventListener('loadedmetadata', dur);
-}
+    function forward(){
+        const wasPlaying = !canzone.paused;
+        x += 1;
+        if(x > lun_array){
+            x = 0;
+        }
+        songs(x);
+        dur();
 
-songs(0);
-
-const lines = document.querySelector('.lineChild');
-const progress = document.querySelector('.line');
-const strt = document.querySelector('#start');
-const end = document.querySelector('#end');
-
-function dur(){
-    var dura = canzone.duration;
-    var secdu = Math.floor(dura % 60);
-    var mindu = Math.floor(dura / 60);
-    if(secdu < 10){
-        secdu = '0' + secdu;
+        if (wasPlaying) {
+            canzone.play();
+        } else {
+            removeEffect(); 
+        }
     }
-    end.innerHTML = mindu + ':' + secdu;
-}
 
-function prog(){
-    var curTime = canzone.currentTime;
-    var minCur = Math.floor(curTime / 60);
-    var secCur = Math.floor(curTime % 60);
+    
+    window.backward = backward;
+    window.forward = forward;
+    window.indietro = indietro;
 
-    if(secCur < 10){
-        secCur = '0' + secCur;
-    }
-    strt.innerHTML = minCur + ':' + secCur;
-
-    if(canzone.currentTime >= canzone.duration) {
-        forward();
-    }
-}
+})
 
 
-function line(){
-    var widthbar = (canzone.currentTime / canzone.duration) * 100;
-    lines.style.width = widthbar ;
-}
 
-function indietro()
-{
-   window.location.href = 'home.php';
+function indietro() {
+    window.location.href = 'home.php';
 }
