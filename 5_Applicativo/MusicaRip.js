@@ -12,12 +12,18 @@ const DisPause = document.getElementById('Tpause');
 
 var x = 0;
 
-const artist_name =['A$AP Rocky', 'Don Toliver', 'Baby Gang','Metro Boomin','Bello Figo']  
-const song_title =['Get Lit', 'You', 'Casablanca','Trance','Non Pago Affitto']  
+//const artist_name =  ['A$AP Rocky','Baby Gang','Bello Figo','Metro Boomin','Don Toliver'] ;
+//const song_title =  ['Get Lit','Casablanca','Non Pago Affitto','Trance','You'];
+
+fetch('Connessione.php')
+.then(res => res.json())
+.then(data => {
+  artist_name = data.map(s => s.Autore);
+  song_title = data.map(s => s.Titolo);
+})
+
 
 playSong.addEventListener('click', effect)
-
-
 
 function effect(){
 
@@ -149,5 +155,5 @@ function line(){
 
 function indietro()
 {
-    window.location.href = 'home.html';
+   window.location.href = 'home.php';
 }
