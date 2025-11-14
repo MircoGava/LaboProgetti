@@ -1,15 +1,28 @@
 <?php
+session_start();
 header('Content-Type: application/json');
 
-// Connessione al database
+
+include 'visualizza.php';
 $conn = new mysqli("localhost", "root", "", "yourmusic");
 if ($conn->connect_error) {
     echo json_encode(["error" => "Connessione fallita: " . $conn->connect_error]);
     exit;
 }
 
-// Query unica per prendere autore e titolo insieme
-$query = "SELECT Autore, Titolo FROM canzone";
+if (!isset($_SESSION['TitoloPlaylist'])) {
+    echo json_encode(["error" => "Playlist non selezionata"]);
+    exit;
+}
+
+$TitoloPlaylist = $conn->real_escape_string($_SESSION['TitoloPlaylist']);
+
+$query = "SELECT c.Autore, c.Titolo
+FROM canzone AS c
+JOIN contiene AS co 
+ON co.fk_titoloCanzoni = c.Titolo
+WHERE co.fk_titoloPlaylist = '$TitoloPlaylist'";
+
 $result = $conn->query($query);
 
 $songs = [];
@@ -21,5 +34,5 @@ if ($result && $result->num_rows > 0) {
 
 $conn->close();
 
-// Restituisce un array JSON di oggetti
+
 echo json_encode($songs);

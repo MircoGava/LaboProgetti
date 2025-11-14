@@ -22,7 +22,7 @@
 
         if($risultato == TRUE){
             echo "<script> function home() {
-                window.location.href = 'home.php';
+                window.location.href = './home.php';
              } 
              home(); </script>";
         } else {

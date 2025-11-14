@@ -14,20 +14,20 @@
 
         $risultato = $conn->query($query_sql);
 
-       
-
 
         while ($riga = $risultato->fetch_assoc()){
-            $Titolo = $riga["Titolo"];
+            $TitoloPlaylist = $riga["Titolo"];
             $Bio = $riga["Bio"];
 
-
-            echo "<h2 onclick='home()'> Titolo: $Titolo, Bio: $Bio </h2>
-            <script> function home() {
-                window.location.href = 'RiproduttoreCanzoni.html';
+            echo "<h2 onclick=\"window.location.href='setPlaylist.php?TitoloPlaylist=$TitoloPlaylist'\"> $TitoloPlaylist | $Bio </h2>
+            <script> function playlist() {
+                window.location.href = './RiproduttoreCanzoni.html';
              } 
             </script>";
+            
         }
+
+            
     }
 }
     

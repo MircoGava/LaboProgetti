@@ -7,7 +7,7 @@
 <html>
 <head>
     <title>YourMusic</title>
-    <link rel="stylesheet" href="home.css" >
+    <link rel="stylesheet" href="css/home.css" >
 </head>
 <body>
     <div class="d1">
@@ -40,6 +40,8 @@
             window.location.href = 'ElliminaPlaylist.html';
         }
     </script>
+    
+
 
 </body>
 </html>
