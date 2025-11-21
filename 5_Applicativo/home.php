@@ -11,13 +11,13 @@
 </head>
 <body>
     <div class="d1">
-        <h1 class="Titolo">YourMusic</h1>
+        <h1 class="Titolo" >YourMusic</h1>
     </div>
     <div style="display: flex;">
         <div class="d2"  id="blocchi">
             <button onclick="versoAggiuntaPlaylist();">+</button>
             <button onclick="versoRimmuoviPlaylist();">-</button>
-            <button></button>
+            <button onclick="versoAddCanzone();">si</button>
         </div>
         <div class="d3" id="blocchi">
         
@@ -38,6 +38,10 @@
         function versoRimmuoviPlaylist()
         {
             window.location.href = 'ElliminaPlaylist.html';
+        }
+        function versoAddCanzone()
+        {
+            window.location.href = 'AggiungiCanzoni.php';
         }
     </script>
     

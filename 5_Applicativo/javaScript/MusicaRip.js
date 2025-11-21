@@ -1,3 +1,4 @@
+//Richiama le funzioni create nel html:
 const canzone = document.querySelector('.song');
 const playing = document.querySelector('.fa-play');
 const pauses = document.querySelector('.fa-pause');
@@ -15,11 +16,13 @@ var artist_name = [];
 var song_title = [];
 var lun_array = 0;
 
+//riempe gli array con le canzoni e i nomi degli artisti
 fetch('./Connessione.php')
   .then(res => res.json())
   .then(data => {
     artist_name = data.map(song => song.Autore);
     song_title = data.map(song => song.Titolo);
+    song_url   = data.map(song => song.Url);
 
     lun_array = song_title.length - 1;
 
@@ -27,6 +30,7 @@ fetch('./Connessione.php')
 
     playSong.addEventListener('click', effect);
 
+    //Funzione che parte quando si ascolta una canzone: permette alla barra di funzionare e alla musica di partire
     function effect(){
         if((!playing.classList.contains('none'))){
             canzone.play();
@@ -35,6 +39,7 @@ fetch('./Connessione.php')
             setInterval(prog,1000);
             setInterval(line,1000);
 
+            //Codice che permette alla barra della musica di funzionare: quando premi ti sposta a quel tempo della canzone
             progress.addEventListener('click', (e) => {
                 const rect = e.target.getBoundingClientRect();
                 const clickX = e.clientX - rect.left;
@@ -43,11 +48,13 @@ fetch('./Connessione.php')
                 canzone.currentTime = newTime;
             });
 
+            // Permette alla barra di ascolto di muoversi in base a che tempo della canzone sei
             function line() {
                 var widthbar = (canzone.currentTime / canzone.duration) * 100;
                 lines.style.width = widthbar + '%';
             }
         }
+        //Permette alla canzone di mettersi in pausa
         else{
             canzone.pause();
             DisPause.style.display = 'none';
@@ -60,7 +67,8 @@ fetch('./Connessione.php')
         art_img.classList.toggle('round');
         dur();
     }
-
+    //Rimmuove tutti gli effetti: azzera il tempo toglie l'immagine la canzone che stava suonando e cambia l'immagine della pausa 
+    //Richiamata dalle funzioni che permettono di mandare avanti o tornare indietro
     function removeEffect(){
         canzone.pause();
         canzone.currentTime = 0.01;
@@ -72,11 +80,14 @@ fetch('./Connessione.php')
         DisPlay.style.display = 'block';
     }
 
+    //carica la conzone giusta, con la sua immagine e la sua immagine, poi carica la durata
     function songs(x){
         art_name.innerHTML = artist_name[x];
         titolo.innerHTML = song_title[x];
-        art_img.src = 'foto/' +  artist_name[x] + '.png';
-        canzone.src = 'canzoni/' + song_title[x] + '.mp3';
+        song_cover = data.map(song => song.Cover);
+        art_img.src = song_cover[x];
+        var song_url = data.map(song => song.Url);
+        canzone.src = song_url[x];
         canzone.addEventListener('loadedmetadata', dur);
     }
 
@@ -87,6 +98,7 @@ fetch('./Connessione.php')
     const strt = document.querySelector('#start');
     const end = document.querySelector('#end');
 
+    //Mette la durata della canzone alla destra della barra di ascolto
     function dur(){
         var dura = canzone.duration;
         var secdu = Math.floor(dura % 60);
@@ -97,6 +109,7 @@ fetch('./Connessione.php')
         end.innerHTML = mindu + ':' + secdu;
     }
 
+    //Mette a che putno della canzone è
     function prog(){
         var curTime = canzone.currentTime;
         var minCur = Math.floor(curTime / 60);
@@ -107,12 +120,13 @@ fetch('./Connessione.php')
         }
         strt.innerHTML = minCur + ':' + secCur;
 
+        //Se la canzone finisce passa direttamente alla prossima
         if(canzone.currentTime >= canzone.duration) {
             forward();
         }
     }
 
-    
+    //Cambia canzone e passa a quella prima nella lista
     function backward(){
         const wasPlaying = !canzone.paused;
         x -= 1;
@@ -129,6 +143,7 @@ fetch('./Connessione.php')
         }
     }
 
+    //Cambia canzone e mette quella davanti a lui
     function forward(){
         const wasPlaying = !canzone.paused;
         x += 1;
@@ -153,7 +168,7 @@ fetch('./Connessione.php')
 })
 
 
-
+//Permette al tasto in alto a sinistra dello schermo a portarti alla home page
 function indietro() {
     window.location.href = './home.php';
 }

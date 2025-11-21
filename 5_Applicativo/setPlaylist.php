@@ -1,3 +1,4 @@
+//Usato chat gpt per capire come fare questa parte
 <?php
 session_start();
 
