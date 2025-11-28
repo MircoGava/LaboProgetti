@@ -111,8 +111,8 @@ if ($metodo === 'POST') {
     $risultato = $conn->query($query_sql);
 
     if($risultato){
-        echo "<script> window.location.href = 'home.php'; </script>";
-        exit;
+        
+        echo "<script> window.location.href='setUsername.php?username=$username'; </script>";
     } else {
         echo "Errore inserimento: " . $conn->error;
     }

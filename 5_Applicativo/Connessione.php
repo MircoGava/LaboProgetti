@@ -23,62 +23,25 @@ if ($conn->connect_error) {
 
 // Query per prendere le canzoni della playlist
 $query = "
-    SELECT c.Autore, c.Titolo
+    SELECT c.id, c.Autore, c.Titolo, c.Url, c.Cover
     FROM canzone AS c
     JOIN contiene AS co 
-        ON co.fk_titoloCanzoni = c.Titolo
+    ON co.fk_idCanzone = c.id
     WHERE co.fk_titoloPlaylist = '$TitoloPlaylist'
 ";
 
 $result = $conn->query($query);
 
-// Array finale da restituire al JS
+//Riempe la variabile con il titolo e l'autore di quelle canzoni in modo che il file js le possa usare
 $songs = [];
-
 if ($result && $result->num_rows > 0) {
-
-    // Codice che prende i dati dalla api (chat gpt)
     while ($row = $result->fetch_assoc()) {
-
-        $titolo  = urlencode($row["Titolo"]);
-        $autore  = urlencode($row["Autore"]);
-
-        // API di ricerca brano su Jamendo
-        $jamendo_url = 
-            "https://api.jamendo.com/v3.0/tracks/?" .
-            "client_id=$client_id" .
-            "&format=json" .
-            "&limit=1" .
-            "&namesearch=$titolo";
-
-        $apiResponse = file_get_contents($jamendo_url);
-        $apiData = json_decode($apiResponse, true);
-
-        // Se Jamendo ha trovato un brano
-        if (isset($apiData["results"][0])) {
-
-            $track = $apiData["results"][0];
-
-            $songs[] = [
-                "Autore" => $track["artist_name"],
-                "Titolo" => $track["name"],
-                "Url"    => $track["audio"],
-                "Cover" => $track["image"]     
-            ];
-        } else {
-
-            // Se Jamendo NON trova la canzone
-            $songs[] = [
-                "Autore" => $row["Autore"],
-                "Titolo" => $row["Titolo"],
-                "Url"    => null
-            ];
-        }
+        $songs[] = $row;
     }
 }
 
+//chiude la connessione al database
 $conn->close();
 
-// RESTITUISCE I DATI ALLO SCRIPT JS
+
 echo json_encode($songs);
-?>

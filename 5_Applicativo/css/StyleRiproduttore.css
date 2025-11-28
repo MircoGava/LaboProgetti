@@ -6,9 +6,16 @@
     color: rgb(26,26,26);
 }
 
-.box-1{
+.box-1, .box-2, .box-3{
     background: linear-gradient(green -20%, gray);
-    position: absolute;
+    display: flex;
+    flex-direction: column;
+}
+.right{
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 20px;
 }
 
 .center{
@@ -23,6 +30,7 @@ body{
 .box{
     height: 100vh;
     flex-direction: column;
+    display: static;
 }
 
 .art img{
@@ -36,6 +44,20 @@ body{
 .box-1{
     flex-direction: column;
     width: 450px;
+    height: 650px;
+    border-radius: 10px;
+    box-shadow: 3px 3px 10px rgb(22, 177, 22), -2px -2px 10px rgb(22, 177, 22);
+}
+.box-2{
+    flex-direction: column;
+    width: 750px;
+    height: 650px;
+    border-radius: 10px;
+    box-shadow: 3px 3px 10px rgb(22, 177, 22), -2px -2px 10px rgb(22, 177, 22);
+}
+.box-3{
+    flex-direction: column;
+    width: 350px;
     height: 650px;
     border-radius: 10px;
     box-shadow: 3px 3px 10px rgb(22, 177, 22), -2px -2px 10px rgb(22, 177, 22);

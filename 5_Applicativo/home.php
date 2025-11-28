@@ -17,7 +17,7 @@
         <div class="d2"  id="blocchi">
             <button onclick="versoAggiuntaPlaylist();">+</button>
             <button onclick="versoRimmuoviPlaylist();">-</button>
-            <button onclick="versoAddCanzone();">si</button>
+            <button onclick="versoAddCanzone();">C</button>
         </div>
         <div class="d3" id="blocchi">
         

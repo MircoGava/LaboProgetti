@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>YourMusic</title>
+    <link rel="stylesheet" href="css/gestPlaylist.css" >
+<body>
+    
+    <div class="box center">
+        <div class="box-1 center">
+            <h2 >Aggiungi canzone alla playlist</h2>
+
+            <form method="post" action="aggCanzPlay.php">
+                <div class="center"> 
+                Nome Canzone:
+                <input type="text" name="Titolo" required class="text">
+                </div>
+                <br>
+                <div class="center"> 
+                Artista canzone:
+                <input type="text" name="Artista" required class="text">
+                </div>
+                <br>
+                <div class="center"> 
+                <input type="submit"  name="invia" value="Invia" class="submit center" >
+                </div>
+            </form>
+            <div class="center">
+                <p>Non trovi la canzone?</p>
+            </div>
+            <div class="center">
+                <p onclick="Aggiungi();"><b><u>Aggiungila</u></b></p>
+            </div>
+        
+        </div>
+    </div>
+    <script>
+        function Aggiungi() {
+            window.location.href = 'AggiungiCanzoni.php';
+        }
+    </script>
+
+</body>
+</html>

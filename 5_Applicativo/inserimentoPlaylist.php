@@ -5,7 +5,16 @@
 </head>
 <body>
     <?php
-    //connessione a database
+    
+    //Prende la variabile username detta in precedenza
+    session_start();
+
+        if (!isset($_SESSION['username'])) {
+            echo json_encode(["error" => "Username non trovato"]);
+            exit;
+        }
+        $username = $_SESSION['username'];
+        //connessione a database
         $conn = new mysqli("localhost","root","","yourmusic" );
 
         if($conn->connect_error){
@@ -18,8 +27,8 @@
 
         //inserisce nella tabella playlist i dati che l'utente ha inserito in precedenza
         $query_sql = "INSERT INTO  
-                    playlist (Titolo,Bio) 
-                    VALUES ('$titolo', '$bio');";
+                    playlist (Titolo,Bio, fk_username) 
+                    VALUES ('$titolo', '$bio','$username');";
 
         $risultato = $conn->query($query_sql);
 

@@ -10,6 +10,7 @@
 $metodo = $_SERVER['REQUEST_METHOD']; 
 ?>
 
+
 <div class="box center">
     <div class="box-1 center">
         <h2>Aggiungi canzoni</h2>
@@ -36,58 +37,93 @@ $metodo = $_SERVER['REQUEST_METHOD'];
 </div>
 
 <?php 
-if ($metodo === 'POST') {
+//Controlla che il metodo utilizzato sia post in modo che non esce codice inutile
+if ($metodo === 'POST' && isset($_POST['invia'])) {
 
+    //id per jamando messo in variabile in modo che è èiù chiaro
     $client_id = "81358678"; 
 
-    // Prendi i dati dal form
-    $titolo = $_POST["titolo"];
-    $artista = $_POST["artista"];
-    $album = $_POST["album"];
+    //Prende i dati dal post
+    $titolo = trim($_POST["titolo"]);
+    $artista = trim($_POST["artista"]);
+    $album = trim($_POST["album"]);
 
-    // --- 1. CERCA LA CANZONE SU JAMENDO ---
-    $titolo_url = urlencode($titolo);
+    //Trasforma il titolo e l'artista della canzone in un url che servirà poi per la api per trovare i dati
+    $search_query = urlencode("$titolo $artista");
+    //Collegamento alla api, usando l'id va a cercare i dati della traccia da noi selezionata, va  aprendere i dati in formato json e prende la traccia audio in formato mp3
+    $api_url = "https://api.jamendo.com/v3.0/tracks/?client_id=$client_id&format=json&limit=10&audioformat=mp32&search=$search_query";
 
-    $api_url = "https://api.jamendo.com/v3.0/artists/tracks/?client_id=81358678&format=jsonpretty&order=track_name_desc&name=we+are+fm&album_datebetween=0000-00-00_2012-01-01";
+    //Comandi che servono a far partire api e a farla funzionare (aiuto della ai)
+    $ch = curl_init();
+    curl_setopt($ch, CURLOPT_URL, $api_url);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($ch, CURLOPT_TIMEOUT, 30);
+    curl_setopt($ch, CURLOPT_USERAGENT, 'YourMusicApp/1.0');
+    
+    $json = curl_exec($ch);
+    $http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+    curl_close($ch);
 
-    #$api_url = "https://api.jamendo.com/v3.0/artists/tracks/?client_id=$client_id&format=json&limit=1&audioformat=mp31&namesearch=$titolo_url";
-
-
-    $json = file_get_contents($api_url);
-
-    if ($json === false) {
-        die("Errore API Jamendo");
-    }
-
-    $data = json_decode($json, true);
-
-    if (!empty($data["results"])) {
-        $track = $data["results"][0];
-        $url = $track["audio"];
-        $cover = $track["album_image"] ?: $track["image"];
+    $url = "";
+    $cover = "";
+    //Se non riesce a collegarsi alla api da questo errore
+    if ($json === false || $http_code !== 200) {
+        echo "<div>Errore nella connessione all'API Jamendo (HTTP: $http_code)</div>";
     } else {
-        $url = "";
-        $cover = "";
+        //Se si è riuscito a collegare allora prende i dati che gli sono stati restituiti (che erano in fomrato json) e gli legge
+        $data = json_decode($json, true);
+        
+        //se i dati non sono vuoti allora da riempe url e la cover un percorso che permette al file js di usare per far funzionare l'applicativo
+        if (!empty($data["results"]) && isset($data["results"][0])) {
+            $track = $data["results"][0];
+            
+           
+            if (isset($track["audio"])) {
+                $url = $track["audio"];
+            }
+            if (isset($track["album_image"])) {
+                $cover = $track["album_image"];
+            }
+            
+        } else {
+            echo "<div>Nessuna traccia trovata su Jamendo per: $titolo - $artista</div>";
+        }
     }
 
-    // --- 2. INSERIMENTO NEL DATABASE ---
-    $conn = new mysqli("localhost","root","","yourmusic");
+    //Connessione al database
+    try {
+        $conn = new mysqli("localhost", "root", "", "yourmusic");
+        
+        if($conn->connect_error){
+            throw new Exception("Connessione fallita: " . $conn->connect_error);
+        }
 
-    if($conn->connect_error){
-        die("Connessione fallita: " . $conn->connect_error);
+       //Si assiccura che tutti i dati che sono stati ricevuti siano delle stringhe
+        $titolo = $conn->real_escape_string($titolo);
+        $artista = $conn->real_escape_string($artista);
+        $album = $conn->real_escape_string($album);
+        $url = $conn->real_escape_string($url);
+        $cover = $conn->real_escape_string($cover);
+
+        //Inserisce i dati nel database --> precisamente il database yourmusic nella tabella canzoni
+        $query_sql = "INSERT INTO canzone (Titolo, Autore, Album, Url, Cover)
+                      VALUES ('$titolo', '$artista', '$album', '$url', '$cover')";
+
+        if($conn->query($query_sql)){
+            echo "<div>Canzone inserita con successo!</div>";
+            //Ci riporta nella pagina dove possiamo aggiungere canzoni alla playlist
+            //C'è un setTime perchè quando non funzionava mi permetteva di leggere gli errori che mi dava --> ora è baso perchè funziona 
+            echo "<script> setTimeout(function() { window.location.href = 'aggCanzPlay.html'; }, 100); </script>";
+        } else {
+            throw new Exception("Errore inserimento: " . $conn->error);
+        }
+
+        $conn->close();
+        
+    } catch (Exception $e) {
+        echo "<div>Errore database: " . $e->getMessage() . "</div>";
+        
     }
-
-    $query_sql = "INSERT INTO canzone (Titolo, Autore, Album, Url, Cover)
-                  VALUES ('$titolo', '$artista', '$album', '$url', '$cover')";
-
-    if($conn->query($query_sql)){
-        echo "<script> window.location.href = './home.php'; </script>";
-        exit;
-    } else {
-        echo "Errore inserimento: " . $conn->error;
-    }
-
-    $conn->close();
 }
 ?>
 

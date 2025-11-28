@@ -14,15 +14,17 @@ const DisPause = document.getElementById('Tpause');
 var x = 0;
 var artist_name = [];
 var song_title = [];
-var lun_array = 0;
+var song_url = [];
+var song_cover = [];
 
-//riempe gli array con le canzoni e i nomi degli artisti
+//Si connette al file php che legge il database, prende i dati che serviranno al resto del codice per funzionare
 fetch('./Connessione.php')
   .then(res => res.json())
   .then(data => {
     artist_name = data.map(song => song.Autore);
     song_title = data.map(song => song.Titolo);
     song_url   = data.map(song => song.Url);
+    song_cover   = data.map(song => song.Cover);
 
     lun_array = song_title.length - 1;
 
