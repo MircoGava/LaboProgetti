@@ -21,14 +21,23 @@ var song_cover = [];
 fetch('./Connessione.php')
   .then(res => res.json())
   .then(data => {
-    artist_name = data.map(song => song.Autore);
-    song_title = data.map(song => song.Titolo);
-    song_url   = data.map(song => song.Url);
-    song_cover   = data.map(song => song.Cover);
+    const songs = data.song;
+    const scelta = data.scelta;
+
+    artist_name = songs.map(song => song.Autore);
+    song_title = songs.map(song => song.Titolo);
+    song_url   = songs.map(song => song.Url);
+    song_cover   = songs.map(song => song.Cover);
 
     lun_array = song_title.length - 1;
-
-    
+    if(!scelta || scelta === null) { 
+        x = 0;
+    } else {
+        x = song_title.indexOf(scelta);
+        if(x === -1) {
+            x = 0;
+        }
+    }
 
     playSong.addEventListener('click', effect);
 
@@ -83,17 +92,16 @@ fetch('./Connessione.php')
     }
 
     //carica la conzone giusta, con la sua immagine e la sua immagine, poi carica la durata
-    function songs(x){
-        art_name.innerHTML = artist_name[x];
-        titolo.innerHTML = song_title[x];
-        song_cover = data.map(song => song.Cover);
-        art_img.src = song_cover[x];
-        var song_url = data.map(song => song.Url);
-        canzone.src = song_url[x];
+    function loadSong(index){
+        art_name.innerHTML = artist_name[index];
+        titolo.innerHTML = song_title[index];
+
+        art_img.src = song_cover[index];
+        canzone.src = song_url[index];
         canzone.addEventListener('loadedmetadata', dur);
     }
 
-    songs(0);
+    loadSong(x);
 
     const lines = document.querySelector('.lineChild');
     const progress = document.querySelector('.line');
@@ -135,7 +143,7 @@ fetch('./Connessione.php')
         if(x < 0){
             x = lun_array;
         }
-        songs(x);
+        loadSong(x);
         dur();
 
         if (wasPlaying) {
@@ -152,7 +160,7 @@ fetch('./Connessione.php')
         if(x > lun_array){
             x = 0;
         }
-        songs(x);
+        loadSong(x);
         dur();
 
         if (wasPlaying) {
@@ -161,16 +169,16 @@ fetch('./Connessione.php')
             removeEffect(); 
         }
     }
-
+    
     
     window.backward = backward;
     window.forward = forward;
     window.indietro = indietro;
 
-})
+    }
+)
 
-
-//Permette al tasto in alto a sinistra dello schermo a portarti alla home page
+    
 function indietro() {
     window.location.href = './home.php';
 }

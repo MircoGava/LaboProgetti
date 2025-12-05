@@ -2,7 +2,7 @@
 <html>
 <head>
     <title>YourMusic</title>
-    <link rel="stylesheet" href="css/gestPlaylist.css" >
+    <link rel="stylesheet" href="css/account.css" >
 <body>
     
     <div class="box center">
@@ -10,23 +10,21 @@
             <h2 >Crea playlist</h2>
 
             <form method="post" action="inserimentoPlaylist.php">
-                <div class="center"> 
-                Nome playlist:
-                <input type="text" name="Titolo" required class="text">
-                </div>
-                <br>
-                <div class="center"> 
-                Bio:
-                <input type="text" name="Bio" required class="text">
-                </div>
-                <br>
+                <p>Nome playlist:</p>
+                <input type="text" name="Titolo" required class="text" placeholder="Nome playlist">
+                <p>Bio:</p>
+                <input type="text" name="Bio" required class="text" placeholder="Bio">
                 <div class="center"> 
                 <input type="submit"  name="invia" value="Invia" class="submit center" >
                 </div>
             </form>
-        
+            <p onclick="Annulla();"><b><u>Annulla</u></b></p>
         </div>
     </div>
-
+    <script>
+        function Annulla() {
+            window.location.href = 'home.php';
+        }
+    </script>
 </body>
 </html>

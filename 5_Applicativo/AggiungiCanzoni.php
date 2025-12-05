@@ -16,23 +16,20 @@ $metodo = $_SERVER['REQUEST_METHOD'];
         <h2>Aggiungi canzoni</h2>
 
         <form method="post">
-            <div class="center"> 
-                Titolo:
-                <input type="text" name="titolo" required class="text">
-            </div>
+            <p>Titolo:</p>
+            <input type="text" name="titolo" required class="text" placeholder="Titolo della canzone">
 
-            <div class="center"> 
-                Artista:
-                <input type="text" name="artista" required class="text">
-            </div>
+            <p>Artista:</p>
+            <input type="text" name="artista" required class="text" placeholder="Autore della canzone">
 
-            <div class="center"> 
-                Album:
-                <input type="text" name="album" required class="text">
-            </div>
+            <p>Album:</p>
+            <input type="text" name="album" required class="text" placeholder="Album">
 
-            <input type="submit" name="invia" value="Invia" class="submit center">
+            <div class="center">
+                <input type="submit" name="invia" value="Invia" class="submit center">
+            </div>
         </form>
+        <p onclick="Annulla();"><b><u>Annulla</u></b></p>
     </div>
 </div>
 
@@ -126,6 +123,11 @@ if ($metodo === 'POST' && isset($_POST['invia'])) {
     }
 }
 ?>
+<script>
+ function Annulla() {
+            window.location.href = 'AggCanzPlay.html';
+        }
+</script>
 
 </body>
 </html>

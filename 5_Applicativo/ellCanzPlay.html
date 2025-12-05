@@ -11,22 +11,26 @@
             <h2 >Rimmuovi canzone dalla playlist</h2>
 
             <form method="post" action="ellCanzPlay.php">
-                <div class="center"> 
-                Nome canzone:
-                <input type="text" name="Titolo" required class="text">
-                </div>
-                <div class="center"> 
-                Nome Artista:
-                <input type="text" name="Artista" required class="text">
-                </div>
-                <br>
+               
+                <p>Titolo:</p>
+                <input type="text" name="Titolo" required class="text" placeholder="Titolo canzone">
+
+                <p>Artista:</p>
+                <input type="text" name="Artista" required class="text" placeholder="Nome artista">
+
                 <div class="center"> 
                 <input type="submit"  name="invia" value="Invia" class="submit center" >
                 </div>
             </form>
-        
+            <div class="center">
+                <p onclick="Annulla();"><b><u>Annulla</u></b></p>
+            </div>
         </div>
     </div>
-
+    <script>
+        function Annulla() {
+            window.location.href = 'playlist.php';
+        }
+    </script>
 </body>
 </html>

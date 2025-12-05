@@ -14,6 +14,25 @@ if (!isset($_SESSION['TitoloPlaylist'])) {
 // Nome playlist
 $TitoloPlaylist = $_SESSION['TitoloPlaylist'];
 
+if (!isset($_SESSION['username'])) {
+    echo json_encode(["error" => "Username non trovato"]);
+    exit;
+}
+$username = $_SESSION['username'];
+
+if (!isset($_SESSION['Titolo'])) {
+    echo json_encode(["error" => "Username non trovato"]);
+    exit;
+}
+$titoloCanzone = $_SESSION['Titolo'];
+
+if($titoloCanzone == null)
+{
+    $scelta = null;
+}else {
+    $scelta = $titoloCanzone;
+}
+
 // Connessione al database
 $conn = new mysqli("localhost", "root", "", "yourmusic");
 if ($conn->connect_error) {
@@ -28,6 +47,7 @@ $query = "
     JOIN contiene AS co 
     ON co.fk_idCanzone = c.id
     WHERE co.fk_titoloPlaylist = '$TitoloPlaylist'
+    AND co.fk_username = '$username'
 ";
 
 $result = $conn->query($query);
@@ -44,4 +64,7 @@ if ($result && $result->num_rows > 0) {
 $conn->close();
 
 
-echo json_encode($songs);
+echo json_encode([
+    'song' => $songs,
+    'scelta' => $scelta
+]);

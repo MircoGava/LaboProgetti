@@ -7,6 +7,12 @@ session_start();
         exit;
     }
 
+    if (!isset($_SESSION['username'])) {
+        echo json_encode(["error" => "Username non trovato"]);
+        exit;
+    }
+    $username = $_SESSION['username'];
+
     // Nome playlist
     $TitoloPlaylist = $_SESSION['TitoloPlaylist'];
     //connessione a database
@@ -34,14 +40,14 @@ session_start();
 
             //Crea un collegamento tra la playlist e la canzone creando un nuovo dato nella tabella contiene inserendo l'id della canzone e il titolo della playlist
             $query_sql = "INSERT INTO  
-                    contiene (fk_idCanzone,fk_titoloPlaylist) 
-                    VALUES ($idCanzone, '$TitoloPlaylist');";
+                    contiene (fk_idCanzone,fk_titoloPlaylist, fk_username) 
+                    VALUES ($idCanzone, '$TitoloPlaylist', '$username');";
             $risultato = $conn->query($query_sql);
 
-            //Se va a buon fine riporta l'user nella home, altrimenti gli da un errore
+            //Se va a buon fine riporta l'user nella playlist, altrimenti gli da un errore
             if($risultato == TRUE){
                 echo "<script> function home() {
-                    window.location.href = './home.php';
+                    window.location.href = 'playlist.php';
                  } 
                  home(); </script>";
             } else {

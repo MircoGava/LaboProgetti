@@ -2,8 +2,8 @@
 <?php
 session_start();
 
-if (isset($_GET['TitoloPlaylist'])) {
-    $_SESSION['TitoloPlaylist'] = $_GET['TitoloPlaylist'];
+if (isset($_GET['Titolo'])) {
+    $_SESSION['Titolo'] = $_GET['Titolo'];
 }
 
 

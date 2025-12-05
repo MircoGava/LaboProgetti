@@ -58,7 +58,7 @@ if ($metodo === 'POST') {
 <head>
     <title>YourMusic</title>
 
-    <link rel="stylesheet" href="css/gestPlaylist.css" >
+    <link rel="stylesheet" href="css/account.css" >
 <body>
     
     <div class="box center">
@@ -66,19 +66,16 @@ if ($metodo === 'POST') {
         <h2>Registrati</h2>
 
             <form method="post" >
-                <div class="center"> 
-                Username:
-                <input type="text" name="username" required class="text">
-                </div>
-                <div class="center"> 
-                Password:
-                <input type="password" name="password" required class="text">
-                </div>
+                <p>Username:</p>
+                <input type="text" name="username" placeholder="Username" required class="text">
+                <p>Password:</p>
+                <input type="password" name="password"  placeholder="Password" required class="text">
                 <div class="center">
                 <input type="submit"  name="invia" value="Invia" class="submit center" >
                 </div>
             </form>
-            
+            <p style="border=1px">La password deve contenere almeno 8 caratteri, una maiuscola </p>
+            <p>una minuscola e un numero</p>
             <?php if ($metodo === 'POST'): ?>
                 <?php if (!empty($errori)): ?>
                     <div class="error">

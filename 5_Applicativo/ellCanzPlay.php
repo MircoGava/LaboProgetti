@@ -8,6 +8,13 @@ session_start();
 
     // Nome playlist
     $TitoloPlaylist = $_SESSION['TitoloPlaylist'];
+
+    if (!isset($_SESSION['username'])) {
+        echo json_encode(["error" => "Username non trovato"]);
+        exit;
+    }
+    $username = $_SESSION['username'];
+
     //connessione a database
         $conn = new mysqli("localhost","root","","yourmusic" );
 
@@ -34,13 +41,14 @@ session_start();
             //Query che rimmuove dalla playlist una canzone 
             $query_sql = "DELETE FROM contiene 
             WHERE  fk_idCanzone = $idCanzone
-            AND fk_titoloPlaylist = '$TitoloPlaylist' ";
+            AND fk_titoloPlaylist = '$TitoloPlaylist'
+            AND fk_username = '$username' ";
             $risultato = $conn->query($query_sql);
 
-            //Se va a buon fine riporta l'user nella home, altrimenti gli da un errore
+            //Se va a buon fine riporta l'user nella playlist, altrimenti gli da un errore
             if($risultato == TRUE){
                 echo "<script> function home() {
-                    window.location.href = './home.php';
+                    window.location.href = 'playlist.php';
                  } 
                  home(); </script>";
             } else {
