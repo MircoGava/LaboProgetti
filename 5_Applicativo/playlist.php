@@ -8,7 +8,8 @@
 <html>
 <head>
     <title>YourMusic</title>
-    <link rel="stylesheet" href="css/playlist.css" >
+    <link rel="stylesheet" href="css/play.css" >
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 <body>
@@ -19,7 +20,7 @@
         <div class="d2"  >
             <?php echo $printCanzoni->AggiungiCanzoni(); ?>
             <?php echo $printCanzoni->RimmuoviCanzoni(); ?>
-            <button href="#" onclick="indietro()" class="OtherButton"><-</button>
+            <button href="#" onclick="indietro()" id="OtherButton" class="fa-solid fa-arrow-left"></button>
         </div>
         <div class="d3" >
             <table border="1">

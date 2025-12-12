@@ -17,42 +17,35 @@ body{
     justify-content: center;
     align-items: center;
     box-shadow: 3px 3px 10px rgb(4, 5, 4), -2px -2px 10px rgb(11, 14, 11);
+    width: 1650px;
 }
 .d2
 {
-    margin-left: 15pt;
-    width: 300pt;
-    justify-content: center;
-    align-items: center;
-    display: grid;
-    height: 642px;
+    margin-left: 30px;
+    margin-right: 30px;
+    width: 900px;
+    height: 634px;
     background: linear-gradient(green -20%, gray);
     margin-top: 50pt;
     margin-bottom: 15pt;
     box-shadow: 3px 3px 10px rgb(17, 20, 17), -2px -2px 10px rgb(2, 2, 2);
 
 }
-.d3
-{
-    margin-right: 15pt;
-    margin-left: 50pt;
-    width: 1050pt;
-    height: 642px;
-    background: linear-gradient(green -20%, gray);
-    margin-top: 50pt;
-    margin-bottom: 15pt;
-    box-shadow: 3px 3px 10px rgb(17, 20, 17), -2px -2px 10px rgb(2, 2, 2);
-}
+
 
 button
 {
-    width: 95pt;
-    height: 95pt;
-    background: linear-gradient(to top, rgb(7, 82, 7), rgb(53, 112, 53) 75%);
+    width: 150px;
+    height: 100pt;
+    background: linear-gradient(rgb(9, 107, 9) 30%, rgb(4, 151, 4));
     border:0px;
     box-shadow: 1px 1px 3px rgb(7, 8, 7), -1px -1px 3px rgb(4, 5, 4);
     font-size: 100px;
     border-radius: 10px;
+    margin-left: 30px;
+    margin-right: 15px;
+    margin-top: 15pt;
+
 }
 h2{
     font-size: 25px;
@@ -71,13 +64,10 @@ th{
 .th-bio{
     width: 600pt;
 }
-
-.d4{
-    background: linear-gradient(rgb(135, 170, 135) 30%, rgb(103, 109, 103));
-    margin: 15pt;
-    height: 100pt;
-    display: flex;
+.th-nome{
+    width: 900px;
     justify-content: center;
     align-items: center;
-    box-shadow: 3px 3px 10px rgb(4, 5, 4), -2px -2px 10px rgb(11, 14, 11);
+    height: 30px;
 }
+

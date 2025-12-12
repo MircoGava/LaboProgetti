@@ -12,6 +12,8 @@ class mostraCanzoni {
         }
         
         return $_SESSION['TitoloPlaylist'];
+
+        
     }
     //Funzione che mostra la lista delle canzoni
     function mostraCanzoni() {
@@ -71,7 +73,7 @@ class mostraCanzoni {
         }
         
         $TitoloPlaylist = $_SESSION['TitoloPlaylist'];
-        echo "<button  class='OtherButton' onclick=\"window.location.href='setPlaylist2.php?TitoloPlaylist=$TitoloPlaylist'\">+</button>";
+        echo "<button  id='OtherButton' onclick=\"window.location.href='setPlaylist2.php?TitoloPlaylist=$TitoloPlaylist'\">+</button>";
     }
     function RimmuoviCanzoni(){
         if (session_status() === PHP_SESSION_NONE) {
@@ -83,7 +85,7 @@ class mostraCanzoni {
         }
         
         $TitoloPlaylist = $_SESSION['TitoloPlaylist'];
-        echo "<button  class='OtherButton' onclick=\"window.location.href='setPlaylist3.php?TitoloPlaylist=$TitoloPlaylist'\">-</button>";
+        echo "<button  id='OtherButton' onclick=\"window.location.href='setPlaylist3.php?TitoloPlaylist=$TitoloPlaylist'\">-</button>";
     }
     
 }

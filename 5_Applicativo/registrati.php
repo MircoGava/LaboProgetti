@@ -101,8 +101,7 @@ if ($metodo === 'POST') {
 
     // Raccogli dati
     $username = $_POST["username"];
-    $password = $_POST["password"];
-
+    $password = strip_tags(addslashes($_POST['password']));
     // Connessione
     $conn = new mysqli("localhost","root","","yourmusic");
     if($conn->connect_error){

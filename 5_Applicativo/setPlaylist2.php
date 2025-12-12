@@ -7,5 +7,5 @@ if (isset($_GET['TitoloPlaylist'])) {
 }
 
 
-header("Location: aggCanzPlay.html");
+header("Location: AggiungiCanzoni.php");
 exit;

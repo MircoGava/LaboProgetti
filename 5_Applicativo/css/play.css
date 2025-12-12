@@ -46,11 +46,10 @@ body{
 }
 
 
-
 h2{
     font-size: 25px;
 }
-.OtherButton{
+#OtherButton{
     width: 100px;
     height: 100px;
     background: linear-gradient(to top, rgb(7, 82, 7), rgb(53, 112, 53) 75%);

@@ -66,14 +66,23 @@ th{
 }
 
 .th-titolo{
-    width: 450pt;
+    width: 410pt;
 }
 .th-bio{
-    width: 600pt;
+    width: 560pt;
+}
+.th-ell{
+    width: 80pt;
+}
+.td-ell{
+    background-image: url('foto/garbage.png');
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
 }
 
 .d4{
-    background: linear-gradient(rgb(135, 170, 135) 30%, rgb(103, 109, 103));
+    background: linear-gradient(gray 30%, rgb(136, 184, 136));
     margin: 15pt;
     height: 100pt;
     display: flex;
