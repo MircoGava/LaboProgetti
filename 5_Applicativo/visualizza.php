@@ -34,7 +34,7 @@
             //Ogni playlist che puoi vedere ha anche una piccola funzione al suo interno, che quando la premi puoi entrare dentro la playlist.
             //La funzione serve anche a portare la variabile nel file php di cui si è già parlato in precedenza, in modo che la funzione del file riproduttore selezioni 
             //solo le canzoni di quella playlist, il relocate serve ad andare nel html del riproduttore per ascoltare tutte le canzoni
-            echo "<tr><td onclick=\"window.location.href='setPlaylist.php?TitoloPlaylist=$TitoloPlaylist'\"> $TitoloPlaylist</td><td> $Bio </td><td class='td-ell'></td></tr>";
+            echo "<tr><td onclick=\"window.location.href='setPlaylist.php?TitoloPlaylist=$TitoloPlaylist'\"> $TitoloPlaylist</td><td> $Bio </td></tr>";
             
         }
 

@@ -7,7 +7,7 @@
 <html>
 <head>
     <title>YourMusic</title>
-    <link rel="stylesheet" href="css/test.css" >
+    <link rel="stylesheet" href="css/principale.css" >
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
 
@@ -27,7 +27,6 @@
                 <tr>
                     <th class="th-titolo">Titolo</th>
                     <th class="th-bio">Descrizione</th>
-                    <th class="th-ell">Ell</th>
                 </tr>
             <?php
             echo $VisualizzaPlaylist->visualizzaPlay();

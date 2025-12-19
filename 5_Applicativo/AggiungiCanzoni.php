@@ -37,7 +37,7 @@ $metodo = $_SERVER['REQUEST_METHOD'];
 //Controlla che il metodo utilizzato sia post in modo che non esce codice inutile
 if ($metodo === 'POST' && isset($_POST['invia'])) {
 
-    //id per jamando messo in variabile in modo che è èiù chiaro
+    //id per jamando messo per permette al codice di potersi connettere quando prende dati
     $client_id = "81358678"; 
 
     //Prende i dati dal post

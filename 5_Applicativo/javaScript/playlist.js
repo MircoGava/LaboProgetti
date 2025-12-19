@@ -17,7 +17,7 @@ var song_title = [];
 var song_url = [];
 var song_cover = [];
 
-//Si connette al file php che legge il database, prende i dati che serviranno al resto del codice per funzionare
+//Legge i dati json salvati nel file php delle canzoni
 fetch('./Connessione.php')
   .then(res => res.json())
   .then(data => {

@@ -66,14 +66,12 @@ th{
 }
 
 .th-titolo{
-    width: 420pt;
+    width: 450pt;
 }
 .th-bio{
-    width: 570pt;
+    width: 600pt;
 }
-.th-ell{
-    width: 60pt;
-}
+
 
 .d4{
     background: linear-gradient(gray 30%, rgb(136, 184, 136));

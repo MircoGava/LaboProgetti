@@ -108,7 +108,8 @@ if ($metodo === 'POST') {
     $risultato = $conn->query($query_sql);
 
     if($risultato){
-        //se l'account esiste ti porta in una pagina php che trasforma l'username in una variabile che verrà usata anche nel resto del codice, poi ti riporta direttamente nella home
+        //se l'account esiste ti porta in una pagina php che trasforma l'username in una variabile che verrà usata anche nel resto del codice
+        //poi ti riporta direttamente nella home
         echo "<script> window.location.href='setUsername.php?username=$username'; </script>";
     } else {
         echo "Errore inserimento: " . $conn->error;
